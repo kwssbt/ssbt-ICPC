@@ -1,3 +1,6 @@
+#include <bits/stdc++.h>
+using namespace std;
+
 struct BigInt {
   public:
     using ui = unsigned;
@@ -8,8 +11,7 @@ struct BigInt {
     static constexpr int DIGS = 9;
 
   private:
-    using cd = Complex<double>;
-    static constexpr double PI = acos(-1);
+    static constexpr double PI = 3.14159265358979323846;
 
     template <typename T>
     class Complex {
@@ -31,12 +33,20 @@ struct BigInt {
                 a * rhs.a - b * rhs.b,
                 a * rhs.b + b * rhs.a};
         }
+
+        constexpr Complex &operator/=(const T &rhs) {
+            a /= rhs;
+            b /= rhs;
+            return *this;
+        }
     };
 
-    void fft(vector<cd> &a, bool invert) {
+    using cd = Complex<double>;
+
+    static void fft(vector<cd> &a, bool invert) {
         int n = a.size();
         static vector<int> rev;
-        static vector<cd> roots{{0, 0}, {1, 0}};
+        static vector<cd> roots{cd(0, 0), cd(1, 0)};
 
         if (rev.size() != n) {
             int k = __builtin_ctz(n);
@@ -109,7 +119,8 @@ struct BigInt {
         int n = 1;
         while (n < fa.size() + fb.size())
             n <<= 1;
-        vector<Complex> A(n), B(n);
+        
+        vector<cd> A(n), B(n);
         for (int i = 0; i < fa.size(); ++i)
             A[i].a = fa[i];
         for (int i = 0; i < fb.size(); ++i)
@@ -269,7 +280,7 @@ struct BigInt {
             ull av = a.d[i];
             ull bv = i < b.d.size() ? b.d[i] : 0;
             ull cur = av - bv - carry;
-            if (cur < 0) {
+            if (cur < 0) { 
                 cur += BASE;
                 carry = 1;
             } else
@@ -481,10 +492,11 @@ struct BigInt {
         os << x.to_string();
         return os;
     }
+    
     friend istream &operator>>(istream &is, BigInt &x) {
         string s;
         is >> s;
-        x.aad(s);
+        x.read(s);
         return is;
     }
 
