@@ -14,15 +14,12 @@ int nex[M];
 int to[M];
 T weight[M];
 
-int dis[N]; // dis[u] = 起点到 u 的最短距离
-bool in[N]; // in[u]=1 ：点 u 在队列中
-void init(int n){
-    for(int i=0;i<n;++i){
-        in[i]=0;
-        dis[i]=0x3f3f3f3f;
-    }
-}
+T dis[N];
+bool in[N];
+
 void spfa(int start){
+    memset(dis,0x3f,sizeof(dis));
+    memset(in,0,sizeof(in));
     queue<int>q;
     dis[start]=0;
     q.push(start);
@@ -33,7 +30,7 @@ void spfa(int start){
         in[u]=0;
         for(int ei=head[u];ei!=-1;ei=nex[ei]){
             int v=to[ei];
-            int w=weight[ei];
+            T w=weight[ei];
             if(dis[v]>dis[u]+w){
                 dis[v]=dis[u]+w;
                 if(in[v]==0){
@@ -47,30 +44,30 @@ void spfa(int start){
 
 // 检查负环
 
-int cnt[N]; // cnt[u] : 从起点到 u 的最短路上的边数
+int cnt[N]; //cnt[u]:从起点到u的最短路上的边数
 
 bool spfa_check(int s, int n){
-    for(int i=0;i<n;++i){
-        dis[i]=0x3f3f3f3f;
-        in[i]=0;
-        cnt[i]=0;
-    }
+    memset(dis,0x3f,sizeof(dis));
+    memset(cnt,0,sizeof(cnt));
+    memset(in,0,sizeof(in));
     queue<int> q;
     q.push(s);
-    in[s]=1;
-    cnt[s]=0;
     dis[s]=0;
+    cnt[s]=0;
+    in[s]=1;
     while(q.size()){
         int u=q.front();
         q.pop();
-        in[u] = 0;
+        in[u]=0;
         for(int ei=head[u];ei!=-1;ei=nex[ei]){
             int v=to[ei];
-            int w=weight[ei];
+            T w=weight[ei];
             if(dis[v]>dis[u]+w){
                 dis[v]=dis[u]+w;
                 cnt[v]=cnt[u]+1;
-                if(cnt[v]>=n)return 1; // 有负环
+                
+                if(cnt[v]>=n)return 1; //有负环
+                
                 if(in[v]==0){
                     q.push(v);
                     in[v]=1;
@@ -78,5 +75,5 @@ bool spfa_check(int s, int n){
             }
         }
     }
-    return 0; // 无负环
+    return 0; //无负环
 }

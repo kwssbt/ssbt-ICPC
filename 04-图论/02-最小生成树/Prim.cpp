@@ -14,11 +14,11 @@ int nex[M];
 int to[M];
 T weight[M];
 
-int prim(int start,int n){
+T prim(int start,int n){
     // {w,u}
     priority_queue<pair<T,int>,vector<pair<T,int>>,greater<>>pq;
     vector<char>vis(n,0);
-    int sum=0;
+    T sum=0;
     int cnt=0;
     pq.push({0,start});
     while(pq.size()){

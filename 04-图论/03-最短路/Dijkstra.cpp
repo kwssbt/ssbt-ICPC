@@ -14,17 +14,14 @@ int nex[M];
 int to[M];
 T weight[M];
 
-int dis[N];
+T dis[N];
 bool vis[N];
-void init(int n){
-    for(int i=0;i<n;++i){
-        dis[i]=0x3f3f3f3f;
-        vis[i]=0;
-    }
-}
+
 void dijkstra(int start){
+    memset(dis,0x3f,sizeof(dis));
+    memset(vis,0,sizeof(vis));
     // {w,u}
-    priority_queue<pair<int,int>,vector<pair<int,int>>,greater<>>pq;
+    priority_queue<pair<T,int>,vector<pair<T,int>>,greater<>>pq;
     dis[start]=0;
     pq.push({0,start});
     while(pq.size()){
@@ -34,8 +31,8 @@ void dijkstra(int start){
         vis[u]=1;
         for(int ei=head[u];ei!=-1;ei=nex[ei]){
             int v=to[ei];
-            int w=weight[ei];
-            int nc=c+w;
+            T w=weight[ei];
+            T nc=c+w;
             if(dis[v]>nc){
                 dis[v]=nc;
                 pq.push({nc,v});

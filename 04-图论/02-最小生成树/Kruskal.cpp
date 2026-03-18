@@ -28,14 +28,16 @@ public:
     }
 };
 
+typedef long long T;
+
 struct edge{
     int u,v;
-    int w;
+    T w;
 };
 
-int kruskal(int n,vector<edge>&Edges){
+T kruskal(int n,vector<edge>&Edges){
     UF st(n);
-    int sum=0;
+    T sum=0;
     for(auto&[u,v,w]:Edges){
         if(st.merge(u,v)){
             sum+=w;

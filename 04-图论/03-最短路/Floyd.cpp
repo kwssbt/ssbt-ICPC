@@ -1,9 +1,15 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// 0 ~ n-1
+
 const int N=105;
-int dis[N][N];
 const int INF=0x3f3f3f3f;
+
+typedef long long T;
+
+T dis[N][N];
+
 void init(int n){
     for(int i=0;i<n;++i){
         for(int j=0;j<n;++j){
@@ -25,12 +31,12 @@ void floyd(int n){
         }
     }
 }
-bool check_floyd(int n){
-    floyd(n);
+bool check(int n){
+    // floyd(n);
     for(int i=0;i<n;++i){
         if(dis[i][i]<0){
-            return 1; // 有负环
+            return 1; //有负环
         }
     }
-    return 0; // 无负环
+    return 0; //无负环
 }
