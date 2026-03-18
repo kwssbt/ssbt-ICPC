@@ -1,3 +1,7 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+
 namespace X_to_Y{
     char dtoc(int d){
         if(d>9)return 'A'+d-10;
